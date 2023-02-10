@@ -18,6 +18,10 @@ const router = createRouter({
             path: "/seller/:id",
             component: () => import("./components/seller/Update.vue")
         },
+        {
+            path: "/customer/list",
+            component: () => import("./components/customer/List.vue")
+        }
     ]
 });
 export default router;

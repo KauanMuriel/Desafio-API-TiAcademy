@@ -27,8 +27,8 @@
                             Customers
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">List</a></li>
-                            <li><a class="dropdown-item" href="#">Register</a></li>
+                            <li><router-link to="/customer/list" class="dropdown-item">List</router-link></li>
+                            <li><router-link to="" class="dropdown-item">Register</router-link></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">

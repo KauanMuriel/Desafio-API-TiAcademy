@@ -1,18 +1,13 @@
 <template>
-    <div class="modal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Modal body text goes here.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+    <div class="background">
+        <div class="modal-container">
+            <div :class="(typeContainerClass)" class="modal-header"></div>
+            <div class="modal-body">
+                <slot></slot>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary col-2" @click="result(false)">Cancel</button>
+                <button :class="(typeButtonClass)" class="btn col-2" @click="result(true)">Confirm</button>
             </div>
         </div>
     </div>
@@ -20,13 +15,27 @@
 
 <script>
 export default {
-    props: ['name', 'objectType'],
+    props: ['type'],
+    emits: ['confirmation'],
     computed: {
-        typeContentClass() {
+        typeContainerClass() {
             return {
-                'delete-container': this.objectType === 'delete',
-                'confirm-container': this.objectType === 'confirm'
+                'red': this.type === 'delete',
+                'green': this.type === 'confirm'
             }
+        },
+        typeButtonClass() {
+            return {
+                'btn-danger': this.type === 'delete',
+                'btn-success': this.type === 'confirm'
+            }
+        }
+    },
+    methods: {
+        result(response) {
+            this.$emit('confirmation', {
+                response: response
+            });
         }
     }
 }
@@ -37,7 +46,7 @@ export default {
 <style scoped>
 .background {
     position: fixed;
-    background-color: rgba(0, 0, 0, 0.26);
+    background-color: rgba(0, 0, 0, 0.342);
     width: 100vw;
     height: 100vh;
     z-index: 2;
@@ -46,7 +55,10 @@ export default {
     align-items: center;
 }
 
-#modal {
+.modal-container {
+    position: fixed;
+    z-index: 3;
+    top: 10%;
     width: 30vw;
     height: 40vh;
     border-radius: 12px;
@@ -54,12 +66,42 @@ export default {
     background-color: #fff;
 }
 
+.modal-header {
+    width: 100%;
+    height: 12%;
+}
+
+.modal-body {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-actions {
+    width: 100%;
+    height: 18%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.modal-actions .btn {
+    margin: 1% 1% 1% 0;
+}
+
 #header-container {
     width: 100%;
     height: 12%;
 }
 
-.delete-container {
+.red {
     background-color: #dc3545;
+    color: #fff;
+}
+
+.green {
+    background-color: #198754;
 }
 </style>

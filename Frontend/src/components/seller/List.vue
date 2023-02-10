@@ -17,15 +17,22 @@
                         <td>{{ seller.name }}</td>
                         <td>{{ seller.login }}</td>
                         <td>
-                            <button @click="editSeller(seller.id)" class="btn btn-success col-3">Edit</button>
-                            <button data-bs-toggle="modal" data-bs-target="#exampleModal" @click="deleteSeller(seller)" class="btn btn-danger col-3">Delete</button>
+                            <button @click="editSeller(seller.id)" class="btn btn-success col-4">Edit</button>
+                            <button @click="confirmAction(seller)" class="btn btn-danger col-4">Delete</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </base-list>
-    <base-confirm v-show="deleteIsSelected" name="Kauan" objectType="delete"></base-confirm>
+
+    <base-confirm v-if="deleteIsSelected" @confirmation="confirmDelete = response" type="delete">
+        <template #default>
+            <p>Do you really want to delete {{ sellerSelected.name }}?</p>
+            <p><strong>The action cannot be undone.</strong></p>
+        </template>
+    </base-confirm>
+
 </template>
 
 <script>
@@ -41,7 +48,20 @@ export default {
     data() {
         return {
             sellers: [],
-            deleteIsSelected: false
+            deleteIsSelected: false,
+            confirmDelete: null,
+            sellerSelected: null
+        }
+    },
+    watch: {
+        confirmDelete: function () {
+            if (this.confirmDelete === true) {
+                this.deleteSeller(this.sellerSelected);
+            } else {
+                this.deleteIsSelected = false;
+                this.confirmDelete = null;
+            }
+
         }
     },
     methods: {
@@ -53,14 +73,14 @@ export default {
         editSeller(id) {
             this.$router.push('/seller/' + id);
         },
-
-        async deleteSeller(seller) {
+        confirmAction(seller) {
+            this.sellerSelected = seller;
             this.deleteIsSelected = true;
-
-            if (confirm(`Do you really want to delete ${seller.name}?`)) {
-                await SellerDataService.delete(seller.id);
-                this.getSellers();
-            }
+        },
+        async deleteSeller(seller) {
+            await SellerDataService.delete(seller.id);
+            this.deleteIsSelected = false;
+            this.getSellers();
         }
     },
     mounted() {
@@ -70,5 +90,7 @@ export default {
 </script>
 
 <style>
-
+button {
+    text-align: center;
+}
 </style>

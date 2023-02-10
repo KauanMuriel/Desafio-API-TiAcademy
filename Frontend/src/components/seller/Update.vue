@@ -1,5 +1,6 @@
 <template>
     <base-card>
+        <button class="btn btn-primary btn-back" @click="$router.back()">Back</button>
         <h3>Update Seller</h3>
         <hr />
         <div class="form col-8">
@@ -69,5 +70,11 @@ label {
     display: flex;
     flex-direction: column;
     gap: 2vh;
+}
+
+.btn-back {
+    position: absolute;
+    left: 5%;
+    top: 5%;
 }
 </style>
