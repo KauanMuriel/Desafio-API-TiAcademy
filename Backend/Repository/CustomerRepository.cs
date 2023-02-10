@@ -44,7 +44,7 @@ namespace SistemaVendas.Repository
 
         public List<Customer> GetAllCustomers()
         {
-            var customers = _context.Customers.OrderBy(x => x.Name).ToList();
+            var customers = _context.Customers.OrderBy(x => x.Id).ToList();
             return customers;
         }
 

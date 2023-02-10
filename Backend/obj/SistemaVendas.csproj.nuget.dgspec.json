@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kauan.silva\\Documents\\DotNet-TiAcademy\\SistemaVendas\\Api\\SistemaVendas.csproj": {}
+    "C:\\Users\\kauan.silva\\Documents\\DotNet-TiAcademy\\SistemaVendas\\Backend\\SistemaVendas.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kauan.silva\\Documents\\DotNet-TiAcademy\\SistemaVendas\\Api\\SistemaVendas.csproj": {
+    "C:\\Users\\kauan.silva\\Documents\\DotNet-TiAcademy\\SistemaVendas\\Backend\\SistemaVendas.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kauan.silva\\Documents\\DotNet-TiAcademy\\SistemaVendas\\Api\\SistemaVendas.csproj",
+        "projectUniqueName": "C:\\Users\\kauan.silva\\Documents\\DotNet-TiAcademy\\SistemaVendas\\Backend\\SistemaVendas.csproj",
         "projectName": "SistemaVendas",
-        "projectPath": "C:\\Users\\kauan.silva\\Documents\\DotNet-TiAcademy\\SistemaVendas\\Api\\SistemaVendas.csproj",
+        "projectPath": "C:\\Users\\kauan.silva\\Documents\\DotNet-TiAcademy\\SistemaVendas\\Backend\\SistemaVendas.csproj",
         "packagesPath": "C:\\Users\\kauan.silva\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kauan.silva\\Documents\\DotNet-TiAcademy\\SistemaVendas\\Api\\obj\\",
+        "outputPath": "C:\\Users\\kauan.silva\\Documents\\DotNet-TiAcademy\\SistemaVendas\\Backend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -77,7 +77,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.405\\RuntimeIdentifierGraph.json"
         }
       }
     }
