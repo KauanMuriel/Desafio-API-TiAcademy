@@ -1,7 +1,7 @@
 <template>
     <base-list>
         <div class="col-10">
-            <h3>Sellers</h3>
+            <h3>Customers</h3>
             <table class="table table-hover">
                 <thead>
                     <tr>

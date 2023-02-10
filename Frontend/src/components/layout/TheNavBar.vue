@@ -28,7 +28,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><router-link to="/customer/list" class="dropdown-item">List</router-link></li>
-                            <li><router-link to="" class="dropdown-item">Register</router-link></li>
+                            <li><router-link to="/customer/register" class="dropdown-item">Register</router-link></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">

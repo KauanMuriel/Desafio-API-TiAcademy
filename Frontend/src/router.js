@@ -21,6 +21,10 @@ const router = createRouter({
         {
             path: "/customer/list",
             component: () => import("./components/customer/List.vue")
+        },
+        {
+            path: "/customer/register",
+            component: () => import("./components/customer/Register.vue")
         }
     ]
 });
