@@ -16,6 +16,10 @@ class CustomerDataService {
     getById(id) {
         return http.get(`/Customer/${id}`);
     }
+
+    async delete(id) {
+        return await http.delete(`/Customer/${id}`);
+    }
 }
 
 export default new CustomerDataService();
