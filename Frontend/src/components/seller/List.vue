@@ -1,7 +1,14 @@
 <template>
     <base-list>
         <div class="col-10">
-            <h3>Sellers</h3>
+            <div class="list-header">
+                <h3>Sellers</h3>
+                <form class="d-flex" role="search" @submit.prevent>
+                    <button @click="getSellers" class="col-2 btn btn-secondary" id="reset-btn">X</button>
+                    <input class="form-control me-2" type="search" placeholder="Seller id" aria-label="Search" ref="inputId">
+                    <button class="btn btn-outline-success" @click="getById()">Search</button>
+                </form>
+            </div>
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -69,9 +76,18 @@ export default {
     },
     methods: {
         getSellers() {
+            this.$refs.inputId.value = '';
             SellerDataService.list().then(response => {
                 this.sellers = response.data;
             });
+        },
+        getById() {
+            const id = this.$refs.inputId.value;
+            if(id === '') {
+                this.getSellers();
+            } else {
+                this.sellers = this.sellers.filter(x => x.id == id);
+            }
         },
         editSeller(id) {
             this.$router.push('/seller/' + id);
@@ -80,11 +96,11 @@ export default {
             this.sellerSelected = seller;
             this.deleteIsSelected = true;
         },
-        async deleteSeller(response) {
-            if (response) {
+        async deleteSeller(confirmation) {
+            if (confirmation.response === true) {
                 await SellerDataService.delete(this.sellerSelected.id);
-                this.deleteIsSelected = false;
             }
+            this.deleteIsSelected = false;
             this.getSellers();
         },
         redirectRegister() {
@@ -100,5 +116,19 @@ export default {
 <style>
 button {
     text-align: center;
+}
+
+.list-header {
+    margin-top: 2%;
+    display: flex;
+    justify-content: space-between;
+}
+
+table {
+    margin-top: 3%;
+}
+
+#reset-btn {
+    margin-right: 2%;
 }
 </style>

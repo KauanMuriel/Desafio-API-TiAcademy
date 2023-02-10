@@ -25,6 +25,10 @@ const router = createRouter({
         {
             path: "/customer/register",
             component: () => import("./components/customer/Register.vue")
+        },
+        {
+            path: "/customer/:id",
+            component: () => import("./components/customer/Update.vue")
         }
     ]
 });

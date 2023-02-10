@@ -1,5 +1,5 @@
 <template>
-    <div class="background">
+    <div class="background" @click="result(false)">
         <div class="modal-container">
             <div :class="(typeContainerClass)" class="modal-header"></div>
             <div class="modal-body">

@@ -5,8 +5,16 @@ class CustomerDataService {
         return http.get('/Customer/GetAllCustomers');
     }
 
-    register(seller) {
-        return http.post('/Customer', seller);
+    register(customer) {
+        return http.post('/Customer', customer);
+    }
+
+    update(id, customer) {
+        return http.put(`/Customer/${id}`, customer);
+    }
+
+    getById(id) {
+        return http.get(`/Customer/${id}`);
     }
 }
 

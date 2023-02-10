@@ -1,8 +1,12 @@
 <template>
     <div class="card">
+        <button class="btn btn-primary btn-back" @click="$router.back()">Back</button>
         <slot></slot>
     </div>
 </template>
+
+<script>
+</script>
 
 <style>
 .card {
@@ -14,5 +18,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.btn-back {
+    position: absolute;
+    left: 5%;
+    top: 5%;
 }
 </style>
