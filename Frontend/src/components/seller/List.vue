@@ -17,16 +17,17 @@
                         <td>{{ seller.name }}</td>
                         <td>{{ seller.login }}</td>
                         <td>
-                            <button @click="editSeller(seller.id)" class="btn btn-success col-4">Edit</button>
+                            <button @click="editSeller(seller.id)" class="btn btn-primary col-4">Edit</button>
                             <button @click="confirmAction(seller)" class="btn btn-danger col-4">Delete</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
+            <button class="btn btn-success" @click="redirectRegister">Register New Seller</button>
         </div>
     </base-list>
 
-    <base-confirm v-if="deleteIsSelected" @confirmation="confirmDelete = response" type="delete">
+    <base-confirm v-if="deleteIsSelected" @confirmation="deleteSeller" type="delete">
         <template #default>
             <p>Do you really want to delete {{ sellerSelected.name }}?</p>
             <p><strong>The action cannot be undone.</strong></p>
@@ -55,7 +56,9 @@ export default {
     },
     watch: {
         confirmDelete: function () {
+            console.log("parou aqui");
             if (this.confirmDelete === true) {
+                console.log(this.sellerSelected);
                 this.deleteSeller(this.sellerSelected);
             } else {
                 this.deleteIsSelected = false;
@@ -77,10 +80,15 @@ export default {
             this.sellerSelected = seller;
             this.deleteIsSelected = true;
         },
-        async deleteSeller(seller) {
-            await SellerDataService.delete(seller.id);
-            this.deleteIsSelected = false;
+        async deleteSeller(response) {
+            if (response) {
+                await SellerDataService.delete(this.sellerSelected.id);
+                this.deleteIsSelected = false;
+            }
             this.getSellers();
+        },
+        redirectRegister() {
+            this.$router.push('/seller/register');
         }
     },
     mounted() {

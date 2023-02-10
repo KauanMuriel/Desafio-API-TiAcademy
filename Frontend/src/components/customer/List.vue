@@ -17,12 +17,13 @@
                         <td>{{ customer.name }}</td>
                         <td>{{ customer.login }}</td>
                         <td>
-                            <button @click="" class="btn btn-success col-4">Edit</button>
+                            <button @click="" class="btn btn-primary col-4">Edit</button>
                             <button @click="" class="btn btn-danger col-4">Delete</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
+            <button class="btn btn-success" @click="redirectRegister">Register New Customer</button>
         </div>
     </base-list>
 </template>
@@ -45,6 +46,9 @@ export default {
             CustomerDataService.list().then(response => {
                 this.customers = response.data;
             });
+        },
+        redirectRegister() {
+            this.$router.push('/customer/register');
         }
     },
     mounted() {
