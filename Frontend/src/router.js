@@ -29,6 +29,10 @@ const router = createRouter({
         {
             path: "/customer/:id",
             component: () => import("./components/customer/Update.vue")
+        },
+        {
+            path: "/order/list",
+            component:() => import("./components/order/List.vue")
         }
     ]
 });
