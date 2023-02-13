@@ -1,17 +1,27 @@
 <template>
-    <tr>
-        <td v-for="value in item">{{ value }}</td>
-        <td>
-            <button  class="btn btn-primary col-4 action-btn" id="edit-btn"></button>
-            <button  class="btn btn-danger col-4 action-btn" id="delete-btn"></button>
-        </td>
-    </tr>
-
+        <tr>
+            <td v-for="value in valuesTd">{{ value }}</td>
+            <td>
+                <button class="btn btn-primary col-4 action-btn" id="edit-btn" @click="this.$emit('edit-pressed')"></button>
+                <button class="btn btn-danger col-4 action-btn" id="delete-btn" @click="this.$emit('deletePressed', item)"></button>
+            </td>
+        </tr>
 </template>
 
 <script>
 export default {
-    props: ['item']
+    props: ['item'],
+    computed: {
+        valuesTd() {
+            let values = [];
+            for (const key in this.item) {
+                if (key !== 'password') {
+                    values.push(this.item[key]);
+                }
+            }
+            return values;
+        }
+    }
 }
 </script>
 

@@ -14,24 +14,9 @@
             </div>
             <slot name="list-body">
                 <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">Id</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Login</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                    </thead>
+                    <table-head :collection="collection"></table-head>
                     <tbody>
-                        <tr v-for="(item, index) in collection" :key="index">
-                            <td>{{ item.id }}</td>
-                            <td>{{ item.name }}</td>
-                            <td>{{ item.login }}</td>
-                            <td>
-                                <button @click="editItem(item.id)" class="btn btn-primary col-4">Edit</button>
-                                <button @click="askDeleteConfirmation(item)" class="btn btn-danger col-4">Delete</button>
-                            </td>
-                        </tr>
+                        <table-row v-for="item in collection" :item="item" @delete-pressed="askDeleteConfirmation(item)" @edit-pressed="editItem(item.id)"></table-row>
                     </tbody>
                 </table>
             </slot>
@@ -49,10 +34,14 @@
 
 <script>
 import BaseConfirm from './BaseConfirm.vue';
+import TableRow from '../utilities/TableRow.vue';
+import TableHead from '../utilities/TableHead.vue';
 
 export default {
     components: {
-        BaseConfirm
+        BaseConfirm,
+        TableRow,
+        TableHead
     },
     props: ['name', 'service'],
     data() {
@@ -61,6 +50,11 @@ export default {
             deleteIsSelected: false,
             confirmDelete: null,
             itemSelected: null
+        }
+    },
+    computed: {
+        tableData() {
+
         }
     },
     methods: {
