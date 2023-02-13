@@ -18,7 +18,7 @@ class SellerDataService {
     }
 
     async delete(id) {
-        return await http.delete(`Seller/${id}`);
+        return await http.delete(`/Seller/${id}`);
     }
 }
 

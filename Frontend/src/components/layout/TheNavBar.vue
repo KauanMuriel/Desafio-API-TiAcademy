@@ -38,7 +38,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><router-link to="/service/list" class="dropdown-item">List</router-link></li>
-                            <li><a class="dropdown-item" href="#">Register</a></li>
+                            <li><router-link to="/service/register" class="dropdown-item" href="#">Register</router-link></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
