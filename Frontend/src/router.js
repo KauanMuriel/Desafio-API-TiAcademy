@@ -33,6 +33,10 @@ const router = createRouter({
         {
             path: "/order/list",
             component:() => import("./components/order/List.vue")
+        },
+        {
+            path: "/service/list",
+            component: () => import("./components/service/List.vue")
         }
     ]
 });
