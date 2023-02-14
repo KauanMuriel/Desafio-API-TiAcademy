@@ -2,7 +2,15 @@ import http from "../http-common";
 
 class OrderDataService {
     list() {
-        return http.get("/Order/GetAllOrders")
+        return http.get("/Order/GetAllOrders");
+    }
+
+    getById(id) {
+        return http.get(`/Order/${id}`);
+    }
+
+    async delete() {
+        return await http.delete(`/Order/${id}`);
     }
 }
 

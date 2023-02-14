@@ -13,7 +13,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(item, index) in collection" :key="index" class="table-row" @click="openDetails(item)">
+                    <tr v-for="(item, index) in collection" :key="index" class="table-row" @click="openDetails(item.id)">
                         <td>{{ item.id }}</td>
                         <td>{{ transformDate(item.date) }}</td>
                         <td>{{ item.sellerId }}</td>
@@ -89,8 +89,10 @@ export default {
         transformDate(date) {
             return new Date(date.slice(0, 16)).toLocaleDateString()
         },
-        openDetails(item) {
-            this.order = item;
+        async openDetails(itemId) {
+            await this.service.getById(itemId).then(response => {
+                this.order = response.data;
+            });
             this.detailsIsActive = true;
         },
         closeDetails() {

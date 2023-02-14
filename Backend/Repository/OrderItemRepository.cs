@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using SistemaVendas.Context;
 using SistemaVendas.Models;
 
@@ -26,7 +27,7 @@ namespace SistemaVendas.Repository
 
         public List<OrderItem> List(int orderId)
         {
-            var orderItems = _context.OrderItems
+            var orderItems = _context.OrderItems.Include(x => x.Service)
                                     .Where(x => x.OrderId == orderId)
                                     .OrderBy(x => x.OrderItemId)
                                     .ToList();

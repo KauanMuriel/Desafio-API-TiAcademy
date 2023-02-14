@@ -1,8 +1,10 @@
 <template>
     <thead>
         <tr>
-            <th v-for="name in colNames" scope="col">{{ name }}</th>
-            <th>Actions</th>
+            <slot name="th-cols">
+                <th v-for="name in colNames" scope="col">{{ name }}</th>
+                <th>Actions</th>
+            </slot>
         </tr>
     </thead>
 

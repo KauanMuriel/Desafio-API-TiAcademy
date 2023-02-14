@@ -1,6 +1,6 @@
 <template>
         <tr>
-            <slot>
+            <slot name="tr-cols">
                 <td v-for="value in valuesTd">{{ value }}</td>
             </slot>
             <td>

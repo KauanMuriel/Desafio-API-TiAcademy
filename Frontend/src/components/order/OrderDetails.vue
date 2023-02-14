@@ -31,7 +31,7 @@
                     </div>
                     <div class="name-div">
                         <label for="customerName">Customer</label>
-                        <input type="text" disabled id="customerName">
+                        <input type="text" disabled id="customerName" :value="order.customer.name">
                     </div>
                 </div>
                 <div class="row">
@@ -41,22 +41,38 @@
                     </div>
                     <div class="name-div">
                         <label for="sellerName">Seller</label>
-                        <input type="text" disabled id="sellerName">
+                        <input type="text" disabled id="sellerName" :value="order.seller.name">
                     </div>
                 </div>
             </form>
             <hr>
             <table class="table table-hover">
-                <table-head :collection="collection"></table-head>
+                <table-head :collection="collection">
+                    <template #th-cols>
+                        <th>Item Id</th>
+                        <th>Service</th>
+                        <th>Quantity</th>
+                        <th>Value</th>
+                    </template>
+                </table-head>
                 <tbody>
                     <slot name="table-row">
                         <table-row v-for="item in collection" :item="item" @delete-pressed="askDeleteConfirmation(item)"
-                            @edit-pressed="editItem(item.id)"></table-row>
+                            @edit-pressed="editItem(item.id)">
+                            <template #tr-cols>
+                                <td>{{ item.orderItemId }}</td>
+                                <td>{{ item.service.name }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>{{ item.value }}</td>
+                            </template>
+                        </table-row>
                     </slot>
                 </tbody>
             </table>
         </div>
     </div>
+
+    <!-- <base-confirm></base-confirm> -->
 </template>
 
 <script>
@@ -89,6 +105,9 @@ export default {
                 .then(response => {
                     this.collection = response.data
                 });
+        },
+        askDeleteConfirmation() {
+
         }
     },
     mounted() {
