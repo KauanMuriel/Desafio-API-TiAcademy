@@ -16,7 +16,9 @@
                 <table class="table table-hover">
                     <table-head :collection="collection"></table-head>
                     <tbody>
-                        <table-row v-for="item in collection" :item="item" @delete-pressed="askDeleteConfirmation(item)" @edit-pressed="editItem(item.id)"></table-row>
+                        <slot name="table-row">
+                            <table-row v-for="item in collection" :item="item" @delete-pressed="askDeleteConfirmation(item)" @edit-pressed="editItem(item.id)"></table-row>
+                        </slot>
                     </tbody>
                 </table>
             </slot>

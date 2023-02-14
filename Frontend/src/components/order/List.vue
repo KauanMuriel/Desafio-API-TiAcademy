@@ -2,40 +2,47 @@
     <base-list name="Order" :service="service">
         <template #list-body>
             <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">Id</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Seller</th>
-                            <th scope="col">Client</th>
-                            <th scope="col">Total value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(item, index) in collection" :key="index">
-                            <td>{{ item.id }}</td>
-                            <td>{{ transformDate(item.date) }}</td>
-                            <td>{{ item.sellerId }}</td>
-                            <td>{{ item.customerId }}</td>
-                            <td>
-                                <button @click="editItem(item.id)" class="btn btn-primary col-4">Edit</button>
-                                <button @click="askDeleteConfirmation(item)" class="btn btn-danger col-4">Delete</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Seller</th>
+                        <th scope="col">Client</th>
+                        <th scope="col">Total value</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item, index) in collection" :key="index" class="table-row" @click="openDetails(item)">
+                        <td>{{ item.id }}</td>
+                        <td>{{ transformDate(item.date) }}</td>
+                        <td>{{ item.sellerId }}</td>
+                        <td>{{ item.customerId }}</td>
+                        <td>Value</td>
+                        <td>
+                            <button @click="editItem(item.id)" class="btn btn-primary col-4 action-btn"
+                                id="edit-btn"></button>
+                            <button @click="askDeleteConfirmation(item)" class="btn btn-danger col-4 action-btn"
+                                id="delete-btn"></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </template>
         <button class="btn btn-success" @click="redirectRegister">Register New {{ name }}</button>
     </base-list>
+    <order-details v-if="detailsIsActive" :order="order" @closeDetails="closeDetails"></order-details>
 </template>
 
 <script>
 import BaseList from '../UI/BaseList.vue';
+import OrderDetails from './OrderDetails.vue';
 import OrderDataService from "../../services/OrderDataService";
 
-export default{
+export default {
     components: {
-        BaseList
+        BaseList,
+        OrderDetails
     },
     data() {
         return {
@@ -43,7 +50,9 @@ export default{
             collection: [],
             deleteIsSelected: false,
             confirmDelete: null,
-            itemSelected: null
+            itemSelected: null,
+            order: null,
+            detailsIsActive: false
         }
     },
     methods: {
@@ -78,7 +87,15 @@ export default{
             this.getCollection();
         },
         transformDate(date) {
-            return new Date(date.slice(0,16)).toLocaleDateString()
+            return new Date(date.slice(0, 16)).toLocaleDateString()
+        },
+        openDetails(item) {
+            this.order = item;
+            this.detailsIsActive = true;
+        },
+        closeDetails() {
+            this.order = null;
+            this.detailsIsActive = false;
         }
     },
     mounted() {
@@ -86,3 +103,26 @@ export default{
     }
 }
 </script>
+
+<style>
+.table-row {
+    cursor: pointer;
+}
+
+.action-btn {
+    height: 4vh;
+    width: 4vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-left: 3%;
+}
+
+#delete-btn {
+    background-image: url("../../assets/icons/delete_FILL0_wght400_GRAD0_opsz48.svg");
+}
+
+#edit-btn {
+    background-image: url("../../assets/icons/edit_FILL0_wght400_GRAD0_opsz48.svg");
+}
+</style>
