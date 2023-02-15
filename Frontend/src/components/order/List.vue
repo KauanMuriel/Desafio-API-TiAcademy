@@ -8,7 +8,6 @@
                         <th scope="col">Date</th>
                         <th scope="col">Seller</th>
                         <th scope="col">Client</th>
-                        <th scope="col">Total value</th>
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
@@ -18,7 +17,6 @@
                         <td>{{ transformDate(item.date) }}</td>
                         <td>{{ item.sellerId }}</td>
                         <td>{{ item.customerId }}</td>
-                        <td>Value</td>
                         <td>
                             <button @click="editItem(item.id)" class="btn btn-primary col-4 action-btn"
                                 id="edit-btn"></button>

@@ -48,7 +48,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><router-link to="/order/list" class="dropdown-item">List</router-link></li>
-                            <li><a class="dropdown-item" href="#">Register</a></li>
+                            <li><router-link to="/order/register" class="dropdown-item" href="#">Register</router-link></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#">Search by customer</a></li>
                             <li><a class="dropdown-item" href="#">Search by seller</a></li>

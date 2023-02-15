@@ -49,7 +49,7 @@ export default {
     background-color: rgba(0, 0, 0, 0.342);
     width: 100vw;
     height: 100vh;
-    z-index: 2;
+    z-index: 15;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -57,7 +57,7 @@ export default {
 
 .modal-container {
     position: fixed;
-    z-index: 3;
+    z-index: 20;
     top: 10%;
     width: 30vw;
     height: 40vh;

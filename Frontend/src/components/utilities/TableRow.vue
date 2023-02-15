@@ -1,13 +1,17 @@
 <template>
-        <tr>
-            <slot name="tr-cols">
-                <td v-for="value in valuesTd">{{ value }}</td>
+    <tr>
+        <slot name="tr-cols">
+            <td v-for="value in valuesTd">{{ value }}</td>
+        </slot>
+        <td>
+            <slot name="action-btns">
+                <button class="btn btn-primary col-4 action-btn" id="edit-btn"
+                    @click="this.$emit('edit-pressed')"></button>
+                <button class="btn btn-danger col-4 action-btn" id="delete-btn"
+                    @click="this.$emit('deletePressed', item)"></button>
             </slot>
-            <td>
-                <button class="btn btn-primary col-4 action-btn" id="edit-btn" @click="this.$emit('edit-pressed')"></button>
-                <button class="btn btn-danger col-4 action-btn" id="delete-btn" @click="this.$emit('deletePressed', item)"></button>
-            </td>
-        </tr>
+        </td>
+    </tr>
 </template>
 
 <script>

@@ -21,7 +21,7 @@
                     </div>
                     <div id="value-order-div">
                         <label for="value">Total Value</label>
-                        <input disabled type="text" id="value">
+                        <input disabled type="text" id="value" :value="orderTotalValue">
                     </div>
                 </div>
                 <div class="row">
@@ -72,23 +72,33 @@
         </div>
     </div>
 
-    <!-- <base-confirm></base-confirm> -->
+    <base-confirm v-if="deleteIsSelected" type="delete" @confirmation="deleteItem">
+        <template #default>
+            <p>Do you really want to delete?</p>
+            <p><strong>The action cannot be undone.</strong></p>
+        </template>
+    </base-confirm>
 </template>
 
 <script>
 import TableHead from '../utilities/TableHead.vue';
 import TableRow from '../utilities/TableRow.vue';
 import ItemDataService from '../../services/ItemDataService';
+import BaseConfirm from '../UI/BaseConfirm.vue';
 
 export default {
     props: ['order'],
     components: {
         TableHead,
-        TableRow
+        TableRow,
+        BaseConfirm
     },
     data() {
         return {
-            collection: []
+            collection: [],
+            deleteIsSelected: false,
+            itemSelected: null,
+            service: ItemDataService
         }
     },
     computed: {
@@ -97,19 +107,37 @@ export default {
         },
         hourTransformed() {
             return new Date(this.order.date.slice(0, 24)).toLocaleTimeString();
+        },
+        orderTotalValue() {
+            let totalValue = 0;
+            this.collection.forEach(item => {
+                totalValue += Number(item.value);
+            });
+            return totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL'});
         }
     },
     methods: {
-        getOrderItems() { 
+        getOrderItems() {
             ItemDataService.list(this.order.id)
                 .then(response => {
-                    this.collection = response.data
+                    this.collection = response.data;
                 });
         },
-        askDeleteConfirmation() {
-
+        askDeleteConfirmation(item) {
+            this.deleteIsSelected = true;
+            this.itemSelected = item;
+        },
+        async deleteItem(confirmation) {
+            if (confirmation.response) {
+                console.log(this.order.id);
+                console.log(this.itemSelected.service.id);
+                await this.service.delete(this.order.id, this.itemSelected.service.id);
+            }
+            this.deleteIsSelected = false;
+            this.getOrderItems();
         }
     },
+    emits: ['closeDetails'],
     mounted() {
         this.getOrderItems();
     }

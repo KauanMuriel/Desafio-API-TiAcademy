@@ -9,6 +9,10 @@ class OrderDataService {
         return http.get(`/Order/${id}`);
     }
 
+    register(order) {
+        return http.post("/Order", order);
+    }
+
     async delete() {
         return await http.delete(`/Order/${id}`);
     }
