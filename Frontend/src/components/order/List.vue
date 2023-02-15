@@ -1,5 +1,18 @@
 <template>
-    <base-list name="Order" :service="service">
+    <base-list name="Order" :service="service" @search="filterOrders" @reset-search="getCollection(); resetFilter()">
+        <template #search-btn>
+            <div class="dropdown" id="search-by">
+                <button class="btn btn-secondary dropdown-toggle col-12" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    {{ filterMessage }}
+                </button>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-item" @click="setFilter('Order')">Order</li>
+                    <li class="dropdown-item" @click="setFilter('Customer')">Customer</li>
+                    <li class="dropdown-item" @click="setFilter('Seller')">Seller</li>
+                </ul>
+            </div>
+        </template>
         <template #list-body>
             <table class="table table-hover">
                 <thead>
@@ -19,8 +32,6 @@
                         <td>{{ item.sellerId }}</td>
                         <td>{{ item.customerId }}</td>
                         <td>
-                            <button @click="editItem(item.id)" class="btn btn-primary col-4 action-btn"
-                                id="edit-btn"></button>
                             <button @click.stop="askDeleteConfirmation(item)" class="btn btn-danger col-4 action-btn"
                                 id="delete-btn"></button>
                         </td>
@@ -59,7 +70,9 @@ export default {
             confirmDelete: null,
             itemSelected: null,
             order: null,
-            detailsIsActive: false
+            detailsIsActive: false,
+            filter: null,
+            filterMessage: 'Search by'
         }
     },
     methods: {
@@ -68,13 +81,22 @@ export default {
                 this.collection = response.data;
             });
         },
-        getById() {
-            const id = this.$refs.inputId.value;
+        getById(id) {
             if (id === '') {
                 this.getCollection();
             } else {
                 this.collection = this.collection.filter(x => x.id == id);
             }
+        },
+        getBySeller(id) {
+            this.service.getBySeller(id).then(response => {
+                this.collection = response.data;
+            });
+        },
+        getByCustomer(id) {
+            this.service.getByCustomer(id).then(response => {
+                this.collection = response.data;
+            })
         },
         editItem(id) {
             this.$router.push('/' + this.name + '/' + id);
@@ -105,6 +127,28 @@ export default {
         closeDetails() {
             this.order = null;
             this.detailsIsActive = false;
+        },
+        setFilter(value) {
+            this.filterMessage = value;
+            this.filter = value;
+        },
+        resetFilter() {
+            this.filterMessage = 'Order by';
+            this.filter = null;
+        },
+        filterOrders(id) {
+            switch (this.filter) {
+                case 'Seller':
+                    this.getBySeller(id);
+                    break;
+                case 'Customer':
+                    this.getByCustomer(id);
+                    break;
+                case 'Order':
+                    this.getById(id);
+                    break;
+            }
+
         }
     },
     mounted() {
@@ -133,5 +177,14 @@ export default {
 
 #edit-btn {
     background-image: url("../../assets/icons/edit_FILL0_wght400_GRAD0_opsz48.svg");
+}
+
+#search-by {
+    margin-right: 2%;
+    min-width: 8vw;
+}
+
+.dropdown-item {
+    cursor: pointer;
 }
 </style>

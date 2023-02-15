@@ -5,19 +5,22 @@
                 <slot name="title">
                     <h3>{{ name }}</h3>
                 </slot>
-                <form class="d-flex" role="search" @submit.prevent>
-                    <button @click="getCollection" class="col-2 btn btn-secondary" id="reset-btn">X</button>
-                    <input class="form-control me-2" type="search" placeholder="Enter the Id" aria-label="Search"
-                        ref="inputId">
-                    <button class="btn btn-outline-success" @click="getById">Search</button>
-                </form>
+                    <form class="d-flex" role="search" @submit.prevent>
+                        <button @click="getCollection(); this.$emit('reset-search')" class="col-2 btn btn-secondary" id="reset-btn">X</button>
+                        <slot name="search-btn"></slot>
+                        <input class="form-control me-2" type="search" placeholder="Enter the Id" aria-label="Search"
+                            ref="inputId">
+                        <button class="btn btn-outline-success" @click="getById(); this.$emit('search', this.$refs.inputId.value)">Search</button>
+                    </form>
             </div>
             <slot name="list-body">
                 <table class="table table-hover">
                     <table-head :collection="collection"></table-head>
                     <tbody>
                         <slot name="table-row">
-                            <table-row v-for="item in collection" :item="item" @delete-pressed="askDeleteConfirmation(item)" @edit-pressed="editItem(item.id)"></table-row>
+                            <table-row v-for="item in collection" :item="item"
+                                @delete-pressed="askDeleteConfirmation(item)"
+                                @edit-pressed="editItem(item.id)"></table-row>
                         </slot>
                     </tbody>
                 </table>
@@ -90,11 +93,12 @@ export default {
             }
             this.deleteIsSelected = false;
             this.getCollection();
-        }
+        },
     },
     mounted() {
         this.getCollection();
-    }
+    },
+    emits: ['search', 'reset-search']
 }
 </script>
 

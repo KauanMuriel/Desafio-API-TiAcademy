@@ -16,6 +16,14 @@ class OrderDataService {
     async delete(id) {
         return await http.delete(`/Order/${id}`);
     }
+
+    getBySeller(id) {
+        return http.get("/Order/GetOrdersSeller/" + id);
+    }
+
+    getByCustomer(id) {
+        return http.get("/Order/GetOrdersCustomer/" + id);
+    }
 }
 
 export default new OrderDataService();
