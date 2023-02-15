@@ -111,7 +111,7 @@ export default {
         orderTotalValue() {
             let totalValue = 0;
             this.collection.forEach(item => {
-                totalValue += Number(item.value);
+                totalValue += Number(item.value * item.quantity);
             });
             return totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL'});
         }
@@ -129,8 +129,6 @@ export default {
         },
         async deleteItem(confirmation) {
             if (confirmation.response) {
-                console.log(this.order.id);
-                console.log(this.itemSelected.service.id);
                 await this.service.delete(this.order.id, this.itemSelected.service.id);
             }
             this.deleteIsSelected = false;

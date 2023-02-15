@@ -13,7 +13,7 @@ class OrderDataService {
         return http.post("/Order", order);
     }
 
-    async delete() {
+    async delete(id) {
         return await http.delete(`/Order/${id}`);
     }
 }

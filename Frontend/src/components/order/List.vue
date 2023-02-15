@@ -12,7 +12,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(item, index) in collection" :key="index" class="table-row" @click="openDetails(item.id)">
+                    <tr v-for="(item, index) in collection" :key="index" class="table-row"
+                        @click="openDetails(item.id)">
                         <td>{{ item.id }}</td>
                         <td>{{ transformDate(item.date) }}</td>
                         <td>{{ item.sellerId }}</td>
@@ -20,7 +21,7 @@
                         <td>
                             <button @click="editItem(item.id)" class="btn btn-primary col-4 action-btn"
                                 id="edit-btn"></button>
-                            <button @click="askDeleteConfirmation(item)" class="btn btn-danger col-4 action-btn"
+                            <button @click.stop="askDeleteConfirmation(item)" class="btn btn-danger col-4 action-btn"
                                 id="delete-btn"></button>
                         </td>
                     </tr>
@@ -29,6 +30,12 @@
         </template>
         <button class="btn btn-success" @click="redirectRegister">Register New {{ name }}</button>
     </base-list>
+    <base-confirm v-if="deleteIsSelected" type="delete" @confirmation="deleteItem">
+        <template #default>
+            <p>Do you really want to delete?</p>
+            <p><strong>The action cannot be undone.</strong></p>
+        </template>
+    </base-confirm>
     <order-details v-if="detailsIsActive" :order="order" @closeDetails="closeDetails"></order-details>
 </template>
 
@@ -36,10 +43,12 @@
 import BaseList from '../UI/BaseList.vue';
 import OrderDetails from './OrderDetails.vue';
 import OrderDataService from "../../services/OrderDataService";
+import BaseConfirm from '../UI/BaseConfirm.vue';
 
 export default {
     components: {
         BaseList,
+        BaseConfirm,
         OrderDetails
     },
     data() {
